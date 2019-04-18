@@ -80,7 +80,7 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
     private var viewInflateListener: OnViewInflateListener? = null
     private var delay: Long = 0
     private var autoPosText = false
-    private val mAnimationDuration = 400
+    private var mAnimationDuration = 200
     private var mFocusAnimationMaxValue = 20
     private var mFocusAnimationStep: Int = 1
     private var mCenterX: Int = 0
@@ -167,7 +167,8 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
                         _focusAnimationMaxValue: Int,
                         _focusAnimationStep: Int,
                         _delay: Long,
-                        _autoPosText: Boolean) : this(_activity) {
+                        _autoPosText: Boolean,
+                        _animationDuration: Int) : this(_activity) {
 
         requireNotNull(_activity)
         id = _id
@@ -205,6 +206,7 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
         mFocusAnimationStep = _focusAnimationStep
         delay = _delay
         autoPosText = _autoPosText
+        mAnimationDuration = _animationDuration
 
         initializeParameters()
     }
@@ -625,12 +627,21 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
         private var mFocusCircleRadius: Int = 0
         private var mFocusRectangleWidth: Int = 0
         private var mFocusRectangleHeight: Int = 0
+        private var mAnimationDuration: Int = 200
         private var focusAnimationEnabled = true
         private var mFocusAnimationMaxValue = 20
         private var mFocusAnimationStep = 1
         private var delay: Long = 0
         private var autoPosText = false
 
+        /**
+         * @param animationDuration Default animation duration
+         * @return Builder
+         */
+        fun setAnimationDuration(animationDuration: Int): Builder {
+            mAnimationDuration = animationDuration
+            return this
+        }
 
         /**
          * @param title title text
@@ -910,7 +921,7 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
                     focusCircleRadiusFactor, mBackgroundColor, mFocusBorderColor, mFocusBorderSize, mCustomViewRes, viewInflateListener,
                     mEnterAnimation, mExitAnimation, mAnimationListener, mCloseOnTouch, mEnableTouchOnFocusedView, fitSystemWindows, mFocusShape, mDismissListener, mRoundRectRadius,
                     mFocusPositionX, mFocusPositionY, mFocusCircleRadius, mFocusRectangleWidth, mFocusRectangleHeight, focusAnimationEnabled,
-                    mFocusAnimationMaxValue, mFocusAnimationStep, delay, autoPosText)
+                    mFocusAnimationMaxValue, mFocusAnimationStep, delay, autoPosText, mAnimationDuration)
         }
     }
 
