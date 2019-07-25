@@ -85,6 +85,8 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
     private var mFocusAnimationStep: Int = 1
     private var mCenterX: Int = 0
     private var mCenterY: Int = 0
+    private var mCenterExitAnimationX: Int? = null
+    private var mCenterExitAnimationY: Int? = null
     private var mRoot: ViewGroup? = null
     private var sharedPreferences: SharedPreferences? = null
     var focusCalculator: Calculator? = null
@@ -168,7 +170,9 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
                         _focusAnimationStep: Int,
                         _delay: Long,
                         _autoPosText: Boolean,
-                        _animationDuration: Int) : this(_activity) {
+                        _animationDuration: Int,
+                        _mCenterExitAnimationX: Int?,
+                        _mCenterExitAnimationY: Int?) : this(_activity) {
 
         requireNotNull(_activity)
         id = _id
@@ -207,6 +211,8 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
         delay = _delay
         autoPosText = _autoPosText
         mAnimationDuration = _animationDuration
+        mCenterExitAnimationX = _mCenterExitAnimationX
+        mCenterExitAnimationY = _mCenterExitAnimationY
 
         initializeParameters()
     }
@@ -540,8 +546,8 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
         if (!isAttachedToWindow) return
         val revealRadius = Math.hypot(width.toDouble(), height.toDouble()).toInt()
         ViewAnimationUtils.createCircularReveal(this,
-                mCenterX,
-                mCenterY,
+                mCenterExitAnimationX ?: mCenterX,
+                mCenterExitAnimationY ?:mCenterY,
                 revealRadius.toFloat(),
                 0f).apply {
             duration = mAnimationDuration.toLong()
@@ -633,6 +639,8 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
         private var mFocusAnimationStep = 1
         private var delay: Long = 0
         private var autoPosText = false
+        private var mCenterExitAnimationX: Int? = null
+        private var mCenterExitAnimationY: Int? = null
 
         /**
          * @param animationDuration Default animation duration
@@ -911,6 +919,11 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
             return this
         }
 
+        fun setCenterExitAnimation(centerX: Int, centerY: Int){
+            mCenterExitAnimationX = centerX
+            mCenterExitAnimationY = centerY
+        }
+
         /**
          * builds the builder
          *
@@ -921,7 +934,7 @@ class FancyShowCaseView @JvmOverloads constructor(context: Context, attrs: Attri
                     focusCircleRadiusFactor, mBackgroundColor, mFocusBorderColor, mFocusBorderSize, mCustomViewRes, viewInflateListener,
                     mEnterAnimation, mExitAnimation, mAnimationListener, mCloseOnTouch, mEnableTouchOnFocusedView, fitSystemWindows, mFocusShape, mDismissListener, mRoundRectRadius,
                     mFocusPositionX, mFocusPositionY, mFocusCircleRadius, mFocusRectangleWidth, mFocusRectangleHeight, focusAnimationEnabled,
-                    mFocusAnimationMaxValue, mFocusAnimationStep, delay, autoPosText, mAnimationDuration)
+                    mFocusAnimationMaxValue, mFocusAnimationStep, delay, autoPosText, mAnimationDuration, mCenterExitAnimationX, mCenterExitAnimationY)
         }
     }
 
