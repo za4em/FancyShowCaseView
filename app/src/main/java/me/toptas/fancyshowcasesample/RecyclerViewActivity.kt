@@ -17,7 +17,7 @@
 package me.toptas.fancyshowcasesample
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import java.util.ArrayList
 import kotlinx.android.synthetic.main.activity_recycler_view.*
@@ -59,7 +59,7 @@ class RecyclerViewActivity : BaseActivity() {
                     }
                 }
 
-                focus(layoutManager.findViewByPosition(2).findViewById(R.id.ivIcon))
+                focus(layoutManager.findViewByPosition(2)!!.findViewById(R.id.ivIcon))
             }
         })
     }
